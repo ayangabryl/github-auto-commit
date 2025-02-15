@@ -1,0 +1,40 @@
+name: Daily Commits
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  make-commits:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.PAT }}  # Use PAT for checkout
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      
+      - name: Install dependencies
+        run: |
+          npm i
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "ayangabryl"
+          git config --global user.email "iangabrielagujitas@gmail.com"
+      
+      - name: Run commit script
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: |
+          git remote set-url origin https://ayangabryl:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
+          node index.js
