@@ -9,7 +9,7 @@ const MIN_COMMITS = 4;  // Updated minimum commits
 const MAX_COMMITS = 14; // Updated maximum commits
 const WORK_START_HOUR = 9;
 const WORK_END_HOUR = 23;
-const SKIP_PROBABILITY = 1 / 7;
+const SKIP_PROBABILITY = 0 / 7;
 
 const COMMIT_MESSAGES = [
     "update: daily progress",
